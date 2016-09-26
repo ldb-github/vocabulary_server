@@ -6,10 +6,11 @@ public interface ICategoryService {
 	 * 获取类别列表
 	 * @param page 页码，从1开始
 	 * @param sort 排序方式:f收藏量，w词汇量；如果多种混合，则以逗号间隔
-	 * @param sortType 排序方式:a升序，d降序；如果多种混合，则以逗号间隔，并且与sort一一对应
+	 * @param sortType 排序类型:a升序，d降序；如果多种混合，则以逗号间隔，并且与sort一一对应
+	 * @param secondLan 第二语言
 	 * @return
 	 */
-	String getCategoryList(int page, String sort, String sortType);
+	String getCategoryList(int page, String sort, String sortType, String secondLan);
 	/**
 	 * 获取类别词汇列表
 	 * @param categoryId 类别id

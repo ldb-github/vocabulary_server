@@ -31,10 +31,16 @@ public class CommunicationContract {
 	
 	// Category
 	public static final String KEY_CATEGORY_ID = "c_id";
+	public static final String KEY_CATEGORY_SUBINDEX = "sub_index";
 	public static final String KEY_CATEGORY_NAME = "c_name";
 	public static final String KEY_CATEGORY_IMAGE = "image";
+	public static final String KEY_CATEGORY_IMAGE_REMOTE = "image_remote";
 	public static final String KEY_CATEGORY_FAVORITE_COUNT = "f_count";
 	public static final String KEY_CATEGORY_WORD_COUNT = "w_count";
+	public static final String KEY_CATEGORY_LANGUAGE = "lan";
+	public static final String KEY_CATEGORY_SECOND_LANGUAGE = "s_lan";
+	public static final String KEY_CATEGORY_CREATER = "creater";
+	public static final String KEY_CATEGORY_CREATE_TIME = "create_time";
 	public static final String KEY_CATEGORY_LIST = "category";
 	public static final String KEY_PAGE = "page";
 	public static final String KEY_SORT = "sort";
@@ -42,6 +48,8 @@ public class CommunicationContract {
 	public static final String METHOD_LIST = "list";
 	public static final String METHOD_LIST_VOCABULARY = "listv";
 	public static final String METHOD_IMAGE = "image";
+	public static final String METHOD_ADD = "add";
+	
 	
 	// Vocabulary
 	public static final String KEY_VOCABULARY_LIST = "vocabulary";

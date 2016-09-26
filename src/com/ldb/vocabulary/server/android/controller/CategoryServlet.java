@@ -1,12 +1,17 @@
 package com.ldb.vocabulary.server.android.controller;
 
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+import java.util.Base64;
+//import java.util.Base64;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ldb.util.ImageUtils;
 import com.ldb.vocabulary.server.domain.CommunicationContract;
 import com.ldb.vocabulary.server.service.ICategoryService;
 import com.ldb.vocabulary.server.service.impl.CategoryService;
@@ -53,7 +59,7 @@ public class CategoryServlet extends HttpServlet {
 		String categoryId = null;
 		switch (method) {
 		case CommunicationContract.METHOD_LIST:
-			// /list?page=1&sort=f&s_type=a
+			// /list?page=1&sort=f&s_type=a&s_lan
 			if(serviceInfo.length != 2){
 				return;
 			}
@@ -62,7 +68,8 @@ public class CategoryServlet extends HttpServlet {
 					: Integer.valueOf(request.getParameter(CommunicationContract.KEY_PAGE));
 			String sort = request.getParameter(CommunicationContract.KEY_SORT);
 			String sortType = request.getParameter(CommunicationContract.KEY_SORT_TYPE);
-			result = service.getCategoryList(page, sort, sortType);
+			String secondLan = request.getParameter(CommunicationContract.KEY_CATEGORY_SECOND_LANGUAGE);
+			result = service.getCategoryList(page, sort, sortType, secondLan);
 			break;
 		case CommunicationContract.METHOD_LIST_VOCABULARY:
 			// /listv?c_id=1&page=1
@@ -86,6 +93,16 @@ public class CategoryServlet extends HttpServlet {
 			OutputStream out = response.getOutputStream();
 			getImage(categoryId, imageName, out);
 //			getImage2(request.getRequestURL().toString(), response.getOutputStream());
+			break;
+		case CommunicationContract.METHOD_ADD:
+			// /add?image=sjfso&name=test
+			if(serviceInfo.length != 2){
+				return;
+			}
+			String imageStr = request.getParameter(CommunicationContract.KEY_CATEGORY_IMAGE);
+			String imageNameAdd = request.getParameter("name");
+			stringToImageFile(imageStr, imageNameAdd);
+			
 			break;
 		default:
 			break;
@@ -121,6 +138,19 @@ public class CategoryServlet extends HttpServlet {
 	private void getImage2(String url, OutputStream out) throws IOException{
 		// 想仿照 https://farm9.staticflickr.com/8041/28769655083_9954c93dd3_m.jpg，返回一个<img..>标签 ，没有成功
 		out.write(("<img src='" + url + "' />").getBytes());
+	}
+	
+	private void stringToImageFile(String imageStr, String imageName) throws IOException{
+		byte[] imageBytes = Base64.getDecoder().decode(imageStr);
+		String ext = ImageUtils.checkImageType(imageBytes);
+		ByteArrayInputStream inputStream = new ByteArrayInputStream(imageBytes);
+		BufferedOutputStream outputStream = new BufferedOutputStream(
+				new FileOutputStream(getServletContext()
+						.getRealPath("/WEB-INF/image/5/" + imageName + ext))); // UUID.randomUUID()
+		outputStream.write(imageBytes);
+		outputStream.flush();
+		outputStream.close();
+		inputStream.close();
 	}
 
 	/**
