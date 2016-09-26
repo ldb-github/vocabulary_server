@@ -10,3 +10,5 @@ This is the server of vocabulary app. Please see the vocabulary_android reposito
 <p>设计及创建category, vocabulary, category_vocabulary, vocabulaty_communication表结构.</p>
 <p>准备开发category和vocabulary相关的service层和dao层.</p>
 
+2015.09.26
+<p>完成获取词汇类别列表的dao层和service层编码.为图片上传做技术准备.</p>
