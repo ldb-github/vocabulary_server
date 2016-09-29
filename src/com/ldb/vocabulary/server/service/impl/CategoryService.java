@@ -43,6 +43,18 @@ public class CategoryService implements ICategoryService{
 			}
 		}
 		
+		if(page < 1){
+			page = 1;
+		}
+		
+		// 默认的排序方式
+		if(sortArray == null){
+			sortArray = new String[1];
+			sortArray[0] = "f";
+			sortTypeArray = new String[1];
+			sortTypeArray[0] = "d";
+		}
+		
 		if(secondLan == null){
 			secondLan = "zh";
 		}

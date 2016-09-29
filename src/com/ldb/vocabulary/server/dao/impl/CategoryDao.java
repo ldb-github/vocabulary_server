@@ -34,8 +34,8 @@ public class CategoryDao implements ICategoryDao{
 		}
 		if(!sortStr.equals("")){
 			sortStr = "        ORDER BY " + sortStr.substring(1);
-		}else{
-			sortStr = "        ORDER BY FAVORITECOUNT DESC ";
+//		}else{
+//			sortStr = "        ORDER BY FAVORITECOUNT DESC ";
 		}
 		
 		StringBuilder sBuilder = new StringBuilder();
