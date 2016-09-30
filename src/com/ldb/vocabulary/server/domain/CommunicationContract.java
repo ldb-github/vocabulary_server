@@ -1,7 +1,9 @@
 package com.ldb.vocabulary.server.domain;
 
 public class CommunicationContract {
-
+	// 字符集
+	public static final String CHARSET_UTF_8 = "UTF-8";
+		
 	public static final String KEY_CODE = "code";
 	public static final String KEY_MESSAGE = "message";
 	public static final String KEY_ERROR = "error";

@@ -8,6 +8,7 @@ import org.apache.commons.dbutils.ResultSetHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 
 import com.ldb.util.jdbc.JdbcUtil_DBUtils;
+
 import com.ldb.vocabulary.server.dao.ICategoryDao;
 import com.ldb.vocabulary.server.domain.Category;
 
@@ -34,8 +35,6 @@ public class CategoryDao implements ICategoryDao{
 		}
 		if(!sortStr.equals("")){
 			sortStr = "        ORDER BY " + sortStr.substring(1);
-//		}else{
-//			sortStr = "        ORDER BY FAVORITECOUNT DESC ";
 		}
 		
 		StringBuilder sBuilder = new StringBuilder();
@@ -72,6 +71,40 @@ public class CategoryDao implements ICategoryDao{
 		List<Category> categories = qr.query(JdbcUtil_DBUtils.getConnection(), sBuilder.toString(), rsh, params);
 
 		return categories;
+	}
+
+	@Override
+	public void addCategory(Category category) throws SQLException {// 
+		String sql = " INSERT INTO CATEGORY(ID, SUBINDEX, NAME, IMAGE, IMAGEREMOTE, FAVORITECOUNT, WORDCOUNT, " + 
+					 " LANGUAGE, USERNAME, CREATETIME) " + " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?) "; // 
+		Object[] params = {
+				category.getId(),
+				category.getSubIndex(),
+				category.getName(),
+				category.getImage(),
+				category.getImageRemote(),
+				category.getFavoriteCount(),
+				category.getWordCount(),
+				category.getLanguage(),
+				category.getUsername(),
+				category.getCreateTime() };
+		
+//		String sql = " INERT INTO CATEGORY(ID, SUBINDEX, NAME, IMAGE,  FAVORITECOUNT, WORDCOUNT, " + 
+//				 "  CREATETIME) " + " VALUES(?, ?, ?, ?, ?, ?, ?) "; // , ?, ?, ?
+//	Object[] params = {
+//			category.getId(),
+//			category.getSubIndex(),
+//			category.getName(),
+//			category.getImage(),
+////			category.getImageRemote(),
+//			category.getFavoriteCount(),
+//			category.getWordCount(),
+////			category.getLanguage(),
+////			category.getUsername(),
+//			category.getCreateTime() };
+		
+		QueryRunner qr = new QueryRunner();
+		qr.update(JdbcUtil_DBUtils.getConnection(), sql, params);
 	}
 
 	

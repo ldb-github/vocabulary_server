@@ -1,6 +1,5 @@
 package com.ldb.vocabulary.server.dao.impl;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,13 +9,8 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 
-//import com.ldb.util.jdbc.BeanHandler;
-//import com.ldb.util.jdbc.BeanListHandler;
-//import com.ldb.util.jdbc.JdbcUtil;
 import com.ldb.util.jdbc.JdbcUtil_DBUtils;
-//import com.ldb.util.jdbc.ResultSetHandler;
 import com.ldb.vocabulary.server.domain.RegisterBean;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 import com.ldb.vocabulary.server.dao.IRegisterDao;
 import com.ldb.vocabulary.server.domain.Account;
 
@@ -25,8 +19,8 @@ public class RegisterDao implements IRegisterDao {
 	@Override
 	public int getRegisteredCountOfImei(String imei) throws SQLException{
 		int count = 0;
-		String sql = "select account.* from account, op_register where op_register.userid is not null " + 
-		             " and account.id = op_register.userid and op_register.imei = ? ";
+		String sql = " SELECT ACCOUNT.* FROM ACCOUNT, OP_REGISTER WHERE OP_REGISTER.USERID IS NOT NULL " + 
+                	 " AND ACCOUNT.ID = OP_REGISTER.USERID AND OP_REGISTER.IMEI = ? ";
 		Object[] params = {imei};
 		ResultSetHandler<List<Account>> rsh = new BeanListHandler<>(Account.class);
 		QueryRunner qr = new QueryRunner();
@@ -38,8 +32,8 @@ public class RegisterDao implements IRegisterDao {
 	@Override
 	public int getRegisteredCountOfMac(String mac) throws SQLException{
 		int count = 0;
-		String sql = "select account.* from account, op_register where op_register.userid is not null " + 
-		             " and account.id = op_register.userid and op_register.mac = ? ";
+		String sql = " SELECT ACCOUNT.* FROM ACCOUNT, OP_REGISTER WHERE OP_REGISTER.USERID IS NOT NULL " + 
+                	 " AND ACCOUNT.ID = OP_REGISTER.USERID AND OP_REGISTER.MAC = ? ";
 		Object[] params = {mac};
 		ResultSetHandler<List<Account>> rsh = new BeanListHandler<>(Account.class);
 		QueryRunner qr = new QueryRunner();
@@ -50,7 +44,7 @@ public class RegisterDao implements IRegisterDao {
 	
 	@Override
 	public RegisterBean getRegisterBean(String phoneNumber, String checkCode) throws SQLException{
-		String sql = "select * from op_register where phonenumber = ? and checkCode = ? and userid is null";
+		String sql = " SELECT * FROM OP_REGISTER WHERE PHONENUMBER = ? AND CHECKCODE = ? AND USERID IS NULL ";
 		Object[] params = {phoneNumber, checkCode};
 		ResultSetHandler<RegisterBean> rsh = new BeanHandler<>(RegisterBean.class);
 		QueryRunner qr = new QueryRunner();
@@ -64,8 +58,8 @@ public class RegisterDao implements IRegisterDao {
 	public String saveRegisterInfoForCheckCode(RegisterBean registerBean) throws SQLException{
 		String registerId = null;
 		
-		String sql = "insert into op_register(phonenumber, checkcode, type, source, ip, mac, imei, location, starttime, endtime)"
-				+ " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = " INSERT INTO OP_REGISTER(PHONENUMBER, CHECKCODE, TYPE, SOURCE, IP, MAC, IMEI, LOCATION, " + 
+					 " STARTTIME, ENDTIME) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Object[] params = {registerBean.getPhoneNumber(), 
 				registerBean.getCheckCode(), 
 				registerBean.getType(),
@@ -80,9 +74,8 @@ public class RegisterDao implements IRegisterDao {
 		QueryRunner qr = new QueryRunner();
 		qr.update(JdbcUtil_DBUtils.getConnection(), sql, params);
 		
-		String sql2 = "select id from op_register where phonenumber = ? and checkcode = ? and type = ? "
-				+ " and starttime = ? and endtime = ?"
-				;
+		String sql2 = " SELECT ID FROM OP_REGISTER WHERE PHONENUMBER = ? AND CHECKCODE = ? AND TYPE = ? " + 
+					  " AND STARTTIME = ? AND ENDTIME = ? ";
 		Object[] params2 = {registerBean.getPhoneNumber(), 
 				registerBean.getCheckCode(), 
 				registerBean.getType(),

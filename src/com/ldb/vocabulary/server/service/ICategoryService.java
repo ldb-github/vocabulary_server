@@ -1,5 +1,9 @@
 package com.ldb.vocabulary.server.service;
 
+import java.io.OutputStream;
+
+import com.ldb.vocabulary.server.domain.Category;
+
 public interface ICategoryService {
 
 	/**
@@ -22,7 +26,13 @@ public interface ICategoryService {
 	 * 获取图片
 	 * @param categoryId 类别id
 	 * @param imageName 图片名称，包括后缀名
+	 * @param out 输出数据流
+	 */
+	void getImage(String categoryId, String imageName, OutputStream out);
+	/**
+	 * 添加类别
+	 * @param category
 	 * @return
 	 */
-	byte[] getImage(String categoryId, String imageName);
+	String addCategory(Category category);
 }
