@@ -14,6 +14,29 @@ import com.ldb.vocabulary.server.domain.SystemParameter;
 
 public class CommonDao implements ICommonDao{
 
+	
+	@Override
+	public boolean isExist(String name) throws SQLException {
+		String sql = " SELECT COUNT(*) COUNT FROM SYSTEMPARAMETER WHERE NAME = ? ";
+		Object[] params = { name };
+		
+		ResultSetHandler<List<Object>> rsh = new ColumnListHandler<Object>("count");
+		QueryRunner qr = new QueryRunner();
+		List<Object> value = qr.query(JdbcUtil_DBUtils.getConnection(), sql, rsh, params);
+		int count = Integer.parseInt(value.get(0).toString());
+		return count > 0;
+	}
+
+	@Override
+	public void addParameter(SystemParameter parameter) throws SQLException {
+		String sql = " INSERT INTO SYSTEMPARAMETER(NAME, VALUE, EXPLANATION) VALUES(?, ?, ?) ";
+		Object[] params = { 
+				parameter.getName(),
+				parameter.getValue(),
+				parameter.getExplanation() };
+		QueryRunner qr = new QueryRunner();
+		qr.update(JdbcUtil_DBUtils.getConnection(), sql, params);
+	}
 	@Override
 	public SystemParameter getParameterByName(String name) throws SQLException {
 		String sql = " SELECT * FROM SYSTEMPARAMETER WHERE NAME = ? ";

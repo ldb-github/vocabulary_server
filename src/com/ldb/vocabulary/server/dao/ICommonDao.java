@@ -7,6 +7,19 @@ import com.ldb.vocabulary.server.domain.SystemParameter;
 public interface ICommonDao {
 
 	/**
+	 * 判断参数是否已经存在
+	 * @param name
+	 * @return
+	 * @throws SQLException 
+	 */
+	boolean isExist(String name) throws SQLException;
+	/**
+	 * 添加参数
+	 * @param parameter
+	 * @throws SQLException 
+	 */
+	void addParameter(SystemParameter parameter) throws SQLException;
+	/**
 	 * 根据参数名获取参数
 	 * @param name
 	 * @return
@@ -35,4 +48,5 @@ public interface ICommonDao {
 	 * @throws SQLException
 	 */
 	void setParameter(String name, String value) throws SQLException;
+	
 }

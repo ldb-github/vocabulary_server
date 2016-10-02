@@ -6,6 +6,12 @@ public class SystemParameter {
 	private String value;
 	private String explanation;
 	
+	public void clear(){
+		this.name = null;
+		this.value = null;
+		this.explanation = null;
+	}
+	
 	public String getName() {
 		return name;
 	}

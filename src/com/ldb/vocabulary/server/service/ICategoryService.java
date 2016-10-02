@@ -3,6 +3,7 @@ package com.ldb.vocabulary.server.service;
 import java.io.OutputStream;
 
 import com.ldb.vocabulary.server.domain.Category;
+import com.ldb.vocabulary.server.domain.Vocabulary;
 
 public interface ICategoryService {
 
@@ -18,10 +19,12 @@ public interface ICategoryService {
 	/**
 	 * 获取类别词汇列表
 	 * @param categoryId 类别id
+	 * @param categoryIndex TODO
 	 * @param page 页码，从1开始
+	 * @param secondLan 第二语言
 	 * @return
 	 */
-	String getCategoryItemList(String categoryId, int page);
+	String getCategoryItemList(String categoryId, int categoryIndex, int page, String secondLan);
 	/**
 	 * 获取图片
 	 * @param categoryId 类别id
@@ -35,4 +38,10 @@ public interface ICategoryService {
 	 * @return
 	 */
 	String addCategory(Category category);
+	/**
+	 * 添加词汇
+	 * @param vocabulary
+	 * @return
+	 */
+	String addVocabulary(Vocabulary vocabulary);
 }

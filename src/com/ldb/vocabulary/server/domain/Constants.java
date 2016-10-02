@@ -11,6 +11,8 @@ public class Constants {
 	
 	// 类别id参数名
 	public static final String PARAMETER_CATEGORY_ID = "category_id";
+	// 词汇id参数名
+	public static final String PARAMETER_VOCABULARY_ID = "vocabulary_id";
 	
 	
 }
